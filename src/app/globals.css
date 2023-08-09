@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins"),
+   url("../app/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: bold;
+ }
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: #5e6278;
+  background: #f5f8fa;
+  font-size: 13px!important;
+    font-weight: 400;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* font-family: Poppins,Helvetica,"sans-serif"; */
+}
+a{
+  color: #5e6278;
+}
+
+.bg-black{
+  background-color: #1e1e2d;
+}
+.border-logo{
+ border-bottom: 1px dashed #4a4848;
+}
+.header-links{
+  /* color: #1e1e2d; */
+}
+
+.header-links:hover{
+  color: rgb(72, 133, 245);
+  background: #f6f6f6;
+}
+
+.dropdown-001{
+  position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);
+}
+
+.sideBtn{
+  color: #1fa5ed;
+  background: rgb(214, 243, 255);
+}
+
+.sideBtn:hover{
+  color: #fff;
+  background: #1fa5ed;
+}
+
+.menu-link {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 100%;
+  outline: none!important;
+  padding: 0.65rem 1rem;
+  transition: none;
+  font-weight: 600;
+}
+
+.menu-link:hover{
+  background-color: #edecec;
+}
+
+.menu-link svg{
+  color: #009ef7;
+}
+
+.headerTag{ 
+ background: #f1faff;
+}
+
+.tagName{
+  color: #009ef7;
+}
+
+.bg-blue-001{
+  background-color: #009ef7;
+}
+.min-h-screen-full{
+  max-height: 370px;
+}
+
+.leading-input{
+  line-height: 1.65rem !important; 
+}
+.border-model-b{
+  border-bottom: 1px solid #ccc;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.btn-1{
+  position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0.5em 1em;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: .88em;
+    line-height: 1.6em;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    outline: none;
+    text-overflow: ellipsis;
+}
