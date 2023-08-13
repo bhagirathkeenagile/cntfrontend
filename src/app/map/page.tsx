@@ -49,6 +49,7 @@ const MapList = () => {
           headers: { "Content-Type": "application/json" },
         });
         const data = await response.json();
+        console.log('data', data);
         setMapList(data.body.mapListData);
       } catch (error) {
         console.error(error);
