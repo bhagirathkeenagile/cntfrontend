@@ -466,6 +466,7 @@ const CreateNewMap = ({ params }: { params: { id: string } }) => {
                     type="file"
                     name="assets"
                     id="assets"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     placeholder="0"
                     onChange={handleFileInputChange}

@@ -98,7 +98,7 @@ const CreateNewMap = () => {
 
   const handleMapNameChange = (event: any) => {
     setMapName(event.target.value);
-    setErrorMsgMapName("");
+  //  setErrorMsgMapName(""); - KA
   };
 
   const handleFileInputChange = (event: any) => {
@@ -134,7 +134,7 @@ const CreateNewMap = () => {
           const formData = new FormData();
           formData.append("file", fileSelected);
           formData.append("targetTable", selectedValue.label);
-
+console.log('before update file', formData)
           const response = await fetch(`${BASE_URL}/excel/upload`, {
             method: "POST",
             body: formData,
@@ -369,6 +369,7 @@ const CreateNewMap = () => {
                     type="file"
                     name="assets"
                     id="assets"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     placeholder="0"
                     onChange={handleFileInputChange}
@@ -422,7 +423,7 @@ const CreateNewMap = () => {
                     classNamePrefix="select"
                     name="color"
                     options={
-                      relationOptions && relationOptions.length
+                      relationOptions
                         ? relationOptions.map((item) => ({
                             value: item.name,
                             label: `${item.name}_(${item.type})_${item.sourceTable}`,

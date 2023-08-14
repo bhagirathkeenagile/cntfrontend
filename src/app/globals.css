@@ -46,9 +46,10 @@ a{
 .border-logo{
  border-bottom: 1px dashed #4a4848;
 }
+/*
 .header-links{
-  /* color: #1e1e2d; */
-}
+   color: #1e1e2d; 
+}*/
 
 .header-links:hover{
   color: rgb(72, 133, 245);
@@ -117,10 +118,10 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Firefox */
+/* Firefox 
 input[type=number] {
   -moz-appearance: textfield;
-}
+}*/
 
 .btn-1{
   position: relative;
@@ -144,4 +145,122 @@ input[type=number] {
     text-decoration: none;
     outline: none;
     text-overflow: ellipsis;
+}
+.fc-button-color-secondary{
+  position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0.5em 1em;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: .88em;
+    line-height: 1.6em;
+    color: black !important;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    outline: none;
+    text-overflow: ellipsis;
+    font-weight: 500 !important;
+    padding: 7px 30px !important
+    ;
+}
+.fc-group .fc-group-button-icon {
+  opacity: 1 !important;
+  font-weight: 100;
+}
+.fc-button-remove:before {
+  margin: 6px 15px !important;
+  width: 30px;
+  height: 30px;
+  content: '\00d7';
+  font-size: 23px !important;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: end !important;
+  text-align: center;
+  color: red;
+  cursor: pointer;
+  background: linear-gradient(to bottom, rgb(212 212 212 / 10%) 0%, rgb(0 0 0 / 39%) 100%);
+  border-radius: 2px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  border: 1px solid #cccc;
+}
+.fc-button-add:before {
+  margin: 6px 15px !important;
+  width: 30px;
+  height: 30px;
+  content: '\00d7';
+  font-size: 23px !important;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: end !important;
+  text-align: center;
+  background: linear-gradient(to bottom, rgb(212 212 212 / 10%) 0%, rgb(0 0 0 / 39%) 100%);
+  border-radius: 2px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  border: 1px solid #cccc;
+  color: green;
+  cursor: pointer;
+}
+.fc-button-color-default{
+  background: #eeeeee;
+  border-radius: 4px;
+  font-weight: 500;
+  border: 1px solid #b23;
+  min-width: 140px;
+  color: #000;
+}
+.fc-button-color-primary{
+  background: #eeeeee;
+    border-radius: 4px;
+    font-weight: 500;
+    border: 1px solid #6abb22;
+    min-width: 140px;
+    color: #000;
+}
+.fc-value-editor{
+  background: #eeeeee;
+    border-radius: 4px;
+    font-weight: 500;
+    border: 1px solid #4622bb;
+    min-width: 140px;
+    color: #000;
+    padding: 4px !important;
+    margin-right: 3px !important;
+    margin-top: 3px !important;
+}
+.fc-dropdownmenu-contextmenu{
+  min-width: 140px;
+}
+.custom-height{
+  height: 39px;
+}
+
+.ka-thead-cell-content{
+  display: flex !important;
+  align-items: center !important;
+}
+
+.ka-paging-page-index, .ka-paging-size {
+  padding: 5px 10px !important;
+  margin: 10px 5px;
+  border-radius: 6px !important;
+}
+.ka-paging-page-index-active, .ka-paging-size-active {
+    background-color: #019ef7 !important;
+    font-weight: bold;
+    color: #ffffff !important;
+}
+.ka-table-wrapper {
+  max-height: 350px !important;
 }
