@@ -1,46 +1,13 @@
-"use client"
-import React, { useState } from 'react';
+import React from "react";
 import {  XMarkIcon } from "@heroicons/react/24/outline";
 import Select from "react-select";
-const baseUrl = process.env.BASE_URL || "http://localhost:5002";
-export default function FilterModel({ visible, onClose, filtervaltomodel }) {
-  const handleOnClose = (e) => {
+export default function FilterModel({ visible, onClose }) {
+  const handleOnClose = (e:any) => {
     if (e.target.id === "container") onClose();
   };
 
   if (!visible) return null;
-  const [inputValue, setInputValue] = useState('');
 
-  const handleInputChange = (e) => {
-    console.log("input",filtervaltomodel);
-    // why filtervaltomodel is empty here? 
-    setInputValue(e.target.value);
-  };
-  const handlesavefilter = async () => {
-    const Data = {
-      name: inputValue,
-      content: JSON.stringify(filtervaltomodel),  
-      page: "contacts",
-    };
-    try {
-      const response = await fetch(`${baseUrl}/search/save`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(Data),
-      });
-
-      if (response.ok) {
-        console.log("Post created successfully");
-        window.location.href = "/contacts";
-      } else {
-        console.error("Error creating post");
-      }
-    } catch (error) {
-      console.error("Error creating post:", error);
-    }
-  };
   return (
     <>
       <div id="container" onClick={handleOnClose}>
@@ -86,7 +53,6 @@ export default function FilterModel({ visible, onClose, filtervaltomodel }) {
                           id="count"
                           className="block w-full h-10 rounded-md px-4 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           placeholder="Enter List Name"
-                          onChange={handleInputChange}
                         />
                       </div>
                                       </div>
@@ -130,7 +96,7 @@ export default function FilterModel({ visible, onClose, filtervaltomodel }) {
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md bg-blue-001 px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
-                      onClick={handlesavefilter}
+                      // onClick={() => setOpen(false)}
                     >
                       Save Change
                     </button>

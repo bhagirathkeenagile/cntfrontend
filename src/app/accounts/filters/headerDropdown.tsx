@@ -1,5 +1,5 @@
 "use client"
-import { Fragment, useState,useEffect } from 'react'
+import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import {
   ArchiveBoxIcon,
@@ -17,31 +17,22 @@ import {
 } from '@heroicons/react/20/solid'
 import { MagnifyingGlassIcon, PencilIcon } from '@heroicons/react/24/outline'
 import FilterModel from '../model/filterModel'
-const baseUrl = process.env.BASE_URL || "http://localhost:5002";
+
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
-const HeaderDropdown = ( { filterVal } ) => {
-  const [filters, setfilter] = useState<any>([]);
-  useEffect(() => {
-    const Datasent = {
-      accountId: 1, 
-      page: "contacts",
-    };
-    async function fetchData() {
-      const response = await fetch(`${baseUrl}/search/get`, {
-        method: "Post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(Datasent),
-      });
-      const data = await response.json();
-      setfilter(data);
-      
-    }
-    fetchData();
-  }, []);
+
+const filter = [
+  {
+    id: 1,
+    name: "new user1",
+  },
+  {
+    id: 2,
+    name: "new user 2",
+  },
+];
+const HeaderDropdown = () => {
     const [showMyModal, setShowMyModel] = useState(false);
     const handleOnClose = () => setShowMyModel(false)
     return (
@@ -52,7 +43,7 @@ const HeaderDropdown = ( { filterVal } ) => {
               <ChevronDownIcon className="h-5" />
             </Menu.Button>
           </div>
-         
+
           <Transition>
             <div className=" absolute left-0 z-50 mt-2 w-96 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="">
@@ -85,9 +76,9 @@ const HeaderDropdown = ( { filterVal } ) => {
               <hr />
               <div className="p-4">
                 <p className="text-sm pb-3">Recently Searched:</p>
-                {filters.map((Name, index) => (
+                {filter.map((Name, index) => (
                  
-                    <div key={index} className="flex justify-between items-center mt-3">
+                    <div className="flex justify-between items-center mt-3">
                     <a href="#">
                       {
                         '' ? <CheckCircleIcon className="h-5 inline-block text-blue-500" /> : <CheckCircleIcon className="h-5 inline-block text-gray-200" />
@@ -111,7 +102,7 @@ const HeaderDropdown = ( { filterVal } ) => {
             </div>
           </Transition>
         </Menu>
-        <FilterModel onClose={handleOnClose} visible={showMyModal}  filtervaltomodel={filterVal}/>
+        <FilterModel onClose={handleOnClose} visible={showMyModal} />
       </>
     );
 }

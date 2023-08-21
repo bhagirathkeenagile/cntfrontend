@@ -4,12 +4,6 @@ const contains = (data: any[], item: any) => {
   if (!item.value) {
     return true;
   }
-  if (!data[item.field]) {
-    return true;
-  }
-  // if (data[item.field]) {
-
-  // }
   return data[item.field].toLowerCase().includes(item.value.toLowerCase());
 };
 const doesNotContain = (data: any[], item: any) => {

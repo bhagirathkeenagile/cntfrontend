@@ -1,78 +1,14 @@
 import React from "react";
-import { Fragment, useState,useEffect } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import axios from 'axios';
-const baseUrl = "http://localhost:5002";
-export default function GetContact({ visible, onClose, filterVal }) {
+export default function GetContact({ visible, onClose }) {
   const handleOnClose = (e) => {
     if (e.target.id === "container") onClose();
   };
-  const convertToNewFormat = (data) => {
-    console.log('data',data);
-    if (data.groupName === 'and') {
-      const newAnd = {};
-      data.items.forEach((item) => {
-        newAnd[item.field] = {
-          [item.operator]: item.value,
-        };
-      });
-      return newAnd;
-    } else if (data.groupName === 'or') {
-      return {
-        OR: data.items.map((item) => convertToNewFormat(item)),
-      };
-    } else {
-      return {};
-    }
-  };
-  
-  
+
   if (!visible) return null;
-  const [employee, setemployee] = useState('');
 
-  const handleemployee = (e) => {
-    setemployee(e.target.value);
-  };
-  const [count, setcount] = useState('');
-
-  const handlecount = (e) => {
-    setcount(e.target.value);
-  };
- 
-  const exportcontact = () => {
-    try {
-      const currentDateTime = new Date().toISOString();
-      const formattedDateTime = new Date(currentDateTime).toISOString();
-      console.log('formattedDateTime',formattedDateTime);
-    const convertedData = convertToNewFormat(filterVal);
-    const newconverteddata = JSON.stringify(convertedData).replace('RingLeadScore', 'RingLead_Score__c').replace('>', 'gt').replace('<', 'lt');
-    console.log('convertedData',newconverteddata);
-    async function fetchData() {
-      const config = {
-        headers: {
-          'employeePercentageRequest':employee,
-          'minimumCount':count,
-          'filterval': newconverteddata ,
-        },
-      };
-      
-      const response = await axios.get(`${baseUrl}/jobs/rankings`, config);
-      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'Contacts_'+currentDateTime+'.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
-      console.log('convertToNewFormat',convertedData);      
-    }
-    fetchData();
-  } catch (error) {
-    console.error('Error downloading Excel file:', error);
-  }
-  }
   return (
     <>
       <div id="container" onClick={handleOnClose}>
@@ -118,7 +54,6 @@ export default function GetContact({ visible, onClose, filterVal }) {
                           id="employee"
                           className="block w-full rounded-md px-4 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           placeholder="0.02"
-                          onChange={handleemployee}
                         />
                       </div>
                     </div>
@@ -136,7 +71,6 @@ export default function GetContact({ visible, onClose, filterVal }) {
                           id="count"
                           className="block w-full rounded-md px-4 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           placeholder="200"
-                          onChange={handlecount}
                         />
                       </div>
                     </div>
@@ -146,7 +80,7 @@ export default function GetContact({ visible, onClose, filterVal }) {
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md bg-blue-001 px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
-                       onClick={exportcontact}
+                      // onClick={() => setOpen(false)}
                     >
                       Export
                     </button>
