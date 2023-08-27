@@ -127,7 +127,7 @@ export const groups = [
 ];
 export const filter: IFilterControlFilterValue = {
   groupName: "and",
-  items: [],
+  items: [], 
 };
 const ContactList = () => {
   const [searchText, setSearchText] = useState("");
