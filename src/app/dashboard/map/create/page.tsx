@@ -31,37 +31,8 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const CreateNewMap = ({ params }: { params: { id: string } }) => {
+const CreateNewMap = () => {
   const [step, setStep] = useState(1);
-  const [selectedRelation, setSelectedRelation] = useState<any[]>([]);
-
-  // useEffect(() => {
-  //   const getMapDetails = async () => {
-      
-  //     // @bhagirath pleae complete this
-
-  //     const response = await fetch(`/api/mapdata`, {
-  //       method: "GET",
-  //       headers: { "Content-Type": "application/json" },
-  //     });
-  //     const ruleSetData = await response.json();
-
-      
-      
-  //       }
-        
-  //       });
-       
-        
-        
-
-       
-                
-                
-  //   };
-  //   getMapDetails();
-  // }, []);
-
   const nextStep = () => {
     setStep((prevStep) => prevStep + 1);
   };
@@ -72,9 +43,7 @@ const CreateNewMap = ({ params }: { params: { id: string } }) => {
   const [mapName, setMapName] = useState("");
   const [relationOptions, setRelationOptions] = useState<any[]>([]);
   const [selectedValue, setSelectedValue] = useState({ label: "Contacts" });
-  const [selectedValueTR, setSelectedValueTR] = useState({ label: "No Relation" });
-  
-  
+  const [selectedRelation, setSelectedRelation] = useState<any[]>([]);
   const [excelRows, setSelectedexcelRows] = useState([]);
   const [filePath, setFilePath] = useState("");
   const [selectedTableRows, setselectedTableRows] = useState([
@@ -102,25 +71,6 @@ const CreateNewMap = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-
-        const res = await fetch(`/api/mapList/data?id=${params.id}`);
-      const MapListData = await res.json();
-      console.log("logger-->", MapListData.body.mapData);
-      setMapName(MapListData.body.mapData.name);
-      setSelectedValue({ label: MapListData.body.mapData.mainTable });
-
-      const actionValue =
-      MapListData.body.mapData.action === 'Insert Only' ? 'insert' :
-      MapListData.body.mapData.action === 'Update' ? 'update' :
-      'insert_update';
-
-      setAction(
-        { 
-          label: MapListData.body.mapData.action,
-          value: actionValue,
-         }
-        );
-        console.log('newaction-', action);
         const response = await fetch(`/api/mapdata`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -134,59 +84,12 @@ const CreateNewMap = ({ params }: { params: { id: string } }) => {
             setTableName((prev: any) => [...prev, item.name]);
           }
         });
-        console.log('data----->',data);
-        data.body.tables.map((item: any) => {
-          console.log('item.name', item);
-          if (item.name === MapListData.body.mapData.mainTable) {
-            setRelationOptions(item.relationShips);
-              item.relationShips.map((newItem:any) => {
-                                    
-                setSelectedRelation([
-                  { 
-                    label: `${newItem.name}_(${newItem.type})_${newItem.sourceTable}`
-                  }]
-                  );
-  
-                 console.log('selectedRelation====', selectedRelation.length);
-                
-          }
-  
-          )}
-        })
-
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
   }, []);
-
-  useEffect(() => {
-    ruleSet.map((item: any) => {
-
-      if (item.name === selectedValue.label) {
-        
-        const options = item?.relationShips?.map((relationItem) => {
-          return  ({
-            value: relationItem.name,
-            label: `${relationItem.name}_(${relationItem.type})_${relationItem.sourceTable}`,
-          })
-        })
-
-       
-        setRelationOptions(options);
-      }
-      
-    });
-    
-
-  },[
-    selectedValue
-  ]);
-  useEffect(() => {
-    console.log("relationOptions: ", relationOptions)
-  },[relationOptions])
-
   const handleSelectChangee = (index: any, selectedOption: any) => {
     const updatedValues = [...selectedValues];
     updatedValues[index] = selectedOption.label;
@@ -326,7 +229,8 @@ const CreateNewMap = ({ params }: { params: { id: string } }) => {
 
       if (response.ok) {
         console.log("Post created successfully");
-        window.location.href = "/map";
+        alert("Map created successfully");
+        // window.location.href = "/map";
       } else {
         console.error("Error creating post");
       }
@@ -466,7 +370,6 @@ const CreateNewMap = ({ params }: { params: { id: string } }) => {
                     type="file"
                     name="assets"
                     id="assets"
-                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     placeholder="0"
                     onChange={handleFileInputChange}
@@ -495,15 +398,18 @@ const CreateNewMap = ({ params }: { params: { id: string } }) => {
                       label: item,
                     }))}
                     onChange={(selectedOption: any) => {
-                      
                       setSelectedValue(selectedOption);
-                      setSelectedRelation([]);
+                      ruleSet.map((item: any) => {
+                        if (item.name === selectedOption.label) {
+                          setRelationOptions(item.relationShips);
+                        }
+                      });
                     }}
                     value={selectedValue}
                   />
                 </div>
               </div>
-                    
+
               <div className="mt-2">
                 <label
                   htmlFor="email"
@@ -518,21 +424,10 @@ const CreateNewMap = ({ params }: { params: { id: string } }) => {
                     name="color"
                     options={
                       relationOptions && relationOptions.length
-                        ? relationOptions.filter((item) => {
-                          const record  = selectedRelation.findIndex((itemRelation) => {
-                            console.log("itemRelation", itemRelation);
-                            console.log("item", item);
-
-                            return itemRelation.value === item.name 
-                          });
-                          console.log("Value: ", record);
-                          if(record === -1) {
-                           return  ({
-                              value: item.name,
-                              label: `${item.name}_(${item.type})_${item.sourceTable}`,
-                            })
-                          }
-                        })
+                        ? relationOptions.map((item) => ({
+                            value: item.name,
+                            label: `${item.name}_(${item.type})_${item.sourceTable}`,
+                          }))
                         : [
                             {
                               label: "No Relation",
@@ -542,26 +437,12 @@ const CreateNewMap = ({ params }: { params: { id: string } }) => {
                           ]
                     }
                     onChange={(selectedOption: any) => {
-                      console.log('selectedOption----++', selectedOption);
-                      console.log('relations----++', relationOptions);
-                      if(selectedOption.length===0){
-                        const options = relationOptions.map((relationItem) => {
-                          return  ({
-                            value: relationItem.name,
-                            label: `${relationItem.name}_(${relationItem.type})_${relationItem.sourceTable}`,
-                          })
-                        })  
-                        setRelationOptions(options);
-                      }
-                      setSelectedValueTR(selectedOption);
                       setSelectedRelation(selectedOption);
                     }}
-                    value={selectedRelation}
                     isMulti
-                    
-                    
                   />
                 </div>
+
                 {selectedRelation.length > 0 ? (
                   <div className="mt-2">
                     <table className="min-w-full shadow-sm  border-separate border-spacing-0">
@@ -700,9 +581,7 @@ const CreateNewMap = ({ params }: { params: { id: string } }) => {
                     options={importAction}
                     onChange={(selectedOption: any) => {
                       setAction(selectedOption);
-                      console.log('setAction--', action);
                     }}
-                    value={action}
                   />
                 </div>
               </div>

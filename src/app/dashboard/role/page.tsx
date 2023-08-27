@@ -22,7 +22,7 @@ const dataArray = Array(10)
 import { saveAs } from "file-saver";
 import ActionMenu from "./filters/actionMenu";
 
-const MapList = () => {
+const RoleList = () => {
   const [mapList, setMapList] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [selectedItemId, setSelectedItemId] = useState("");
@@ -49,7 +49,6 @@ const MapList = () => {
           headers: { "Content-Type": "application/json" },
         });
         const data = await response.json();
-        console.log('data', data);
         setMapList(data.body.mapListData);
       } catch (error) {
         console.error(error);
@@ -93,32 +92,29 @@ const MapList = () => {
     setSelectedItemId(itemId);
     setSelectedItemValue(item);
   };
-
-  return (
-    <>
-      <div className="md:flex md:items-center md:justify-between bg-white my-2 px-6 py-3 shadow-sm">
-        <div className="min-w-0 flex-1">
-          <h2 className="text-sm font-bold leading-7 sm:truncate sm:text-lg sm:tracking-tight">
-            Map List
-          </h2>
-        </div>
-        <div className="mt-4 flex md:ml-4 md:mt-0">
-          {/* <Filter /> */}
-          <a
-            href="/map/update/id"
-            type="button"
-            className="inline-flex items-center gap-x-2 rounded-md bg-blue-001 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
-          >
-            <PlusCircleIcon
-              className="-ml-0.5 h-5 w-5 text-blue-100"
-              aria-hidden="true"
-            />
-            Create New
-          </a>
-        </div>
+    return (
+        <>
+             <div className="md:flex md:items-center md:justify-between bg-white my-2 px-6 py-3 shadow-sm">
+      <div className="min-w-0 flex-1">
+        <h2 className="text-sm font-bold leading-7 sm:truncate sm:text-lg sm:tracking-tight">
+          Role List
+        </h2>
       </div>
-
-      <div className="bg-white my-2 px-6 py-3 shadow-sm">
+      <div className="mt-4 flex md:ml-4 md:mt-0">
+      
+      {/* <Filter /> */}
+                    <a
+                        href="/dashboard/role/create"
+        type="button"
+        className="inline-flex items-center gap-x-2 rounded-md bg-blue-001 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
+      >
+        <PlusCircleIcon className="-ml-0.5 h-5 w-5 text-blue-100" aria-hidden="true" />
+        Create New                                                
+      </a>
+      </div>
+            </div>
+            
+            <div className="bg-white my-2 px-6 py-3 shadow-sm">
         <div className="relative shadow-md sm:rounded-lg">
           <div>
             <div className="flex justify-between items-center px-4 py-3">
@@ -242,7 +238,7 @@ const MapList = () => {
                 enabled: true,
                 pageIndex: 0,
                 pageSize: 10,
-                // pageSizes: [5, 10, 15],
+                pageSizes: [5, 10, 15],
                 position: PagingPosition.Bottom,
               }}
               childComponents={{
@@ -265,8 +261,9 @@ const MapList = () => {
           </>
         </div>
       </div>
-    </>
-  );
-};
+     
+        </>
+    )
+}
 
-export default MapList;
+export default RoleList;

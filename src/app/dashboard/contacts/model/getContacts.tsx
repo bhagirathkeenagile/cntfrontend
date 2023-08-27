@@ -58,6 +58,7 @@ export default function GetContact({ visible, onClose, filterVal }) {
       };
       
       const response = await axios.get(`${baseUrl}/jobs/rankings`, config);
+      console.log('response',response.data);
       const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');

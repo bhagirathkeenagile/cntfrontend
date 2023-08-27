@@ -1,10 +1,10 @@
-import "./globals.css";
-import Header from "./dashboard/components/base/Header";
-import Sidebar from "./dashboard/components/base/Sidebar";
-import Footer from "./dashboard/components/base/footer";
+import Header from "./components/base/Header";
+import Sidebar from "./components/base/Sidebar";
+import Footer from "./components/base/footer";
+import "../globals.css";
 import "ka-table/style.css";
 import { Inter } from "next/font/google";
-import { NextAuthProvider } from "./provider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -20,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <NextAuthProvider>
-          <main>{children}</main>
-        </NextAuthProvider>
-        </body>
+        <div>
+          <Sidebar />
+          <main className="xl:pl-72 pb-10">{children}</main>
+          <Footer />
+        </div>
+      </body>
     </html>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import { BASE_URL } from "../../../../utils";
+import { BASE_URL } from "../../../../../../utils";
 import Link from "next/link";
 // import { useHistory } from 'react-router-dom';
 
@@ -31,8 +31,21 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const CreateNewMap = () => {
+const CreateNewMap = ({ params }: { params: { id: string } }) => {
   const [step, setStep] = useState(1);
+
+  useEffect(() => {
+    const getMapDetails = async () => {
+      const res = await fetch(`/api/mapList/data?id=${params.id}`);
+      const data = await res.json();
+      console.log("logger-->", data.body.mapData);
+      setMapName(data.body.mapData.name);
+      setSelectedValue({ label: data.body.mapData.mainTable });
+      // @bhagirath pleae complete this
+    };
+    getMapDetails();
+  }, []);
+
   const nextStep = () => {
     setStep((prevStep) => prevStep + 1);
   };
@@ -98,7 +111,7 @@ const CreateNewMap = () => {
 
   const handleMapNameChange = (event: any) => {
     setMapName(event.target.value);
-  //  setErrorMsgMapName(""); - KA
+    setErrorMsgMapName("");
   };
 
   const handleFileInputChange = (event: any) => {
@@ -134,7 +147,7 @@ const CreateNewMap = () => {
           const formData = new FormData();
           formData.append("file", fileSelected);
           formData.append("targetTable", selectedValue.label);
-console.log('before update file', formData)
+
           const response = await fetch(`${BASE_URL}/excel/upload`, {
             method: "POST",
             body: formData,
@@ -369,7 +382,6 @@ console.log('before update file', formData)
                     type="file"
                     name="assets"
                     id="assets"
-                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     placeholder="0"
                     onChange={handleFileInputChange}
@@ -423,7 +435,7 @@ console.log('before update file', formData)
                     classNamePrefix="select"
                     name="color"
                     options={
-                      relationOptions
+                      relationOptions && relationOptions.length
                         ? relationOptions.map((item) => ({
                             value: item.name,
                             label: `${item.name}_(${item.type})_${item.sourceTable}`,
